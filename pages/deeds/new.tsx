@@ -4,7 +4,7 @@ import { useState, FormEvent, ChangeEvent } from 'react'
 
 interface FormValues {
   description: string
-  isPublic?: string
+  isPublic?: boolean
 }
 
 export default function NewDeed() {
@@ -13,12 +13,12 @@ export default function NewDeed() {
   const router = useRouter()
 
   const [loading, setLoading] = useState(true)
-  const [formValues, setFormValues] = useState<FormValues>({description: ''})
+  const [formValues, setFormValues] = useState<FormValues>({ description: '', isPublic: false })
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log(formValues)
-  }
+  // const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+  //   console.log('formValues')
+  // }
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -27,7 +27,7 @@ export default function NewDeed() {
 
   async function createDeed(e: any) {
     e.preventDefault()
-    console.log(formValues)
+    console.log('formValues', formValues)
     const { description, isPublic } = formValues
     try {
       setLoading(true)
@@ -70,7 +70,7 @@ export default function NewDeed() {
           </div>
           <div>
             <label htmlFor="isPublic" className="flex gap-4">
-              <input type="checkbox" id="isPublic" name="isPublic" value={formValues.isPublic || ''} onChange={handleInputChange} />
+              <input type="checkbox" id="isPublic" name="isPublic" checked={formValues.isPublic || false} onChange={handleInputChange} />
               <span>Make your update public?</span>
             </label>
           </div>

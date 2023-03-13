@@ -1,4 +1,4 @@
-import GoodBoard from '@/components/GoodBoard'
+import GoodBoard from '@/components/PublicBoard'
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 import { Database } from '@/types/supabase'
@@ -31,7 +31,7 @@ export default function Home() {
       <div className="mt-24 grid grid-cols-2 gap-16">
         <div className="">
           <h2>Your good deeds</h2>
-          <ul>
+          <ul className="grid gap-2">
             {deeds.map((deed: deed) => (
               <Deed key={deed.id} deed={deed} />
             ))}

@@ -8,5 +8,10 @@ interface Props {
 }
 
 export default function Deed({ deed }: Props) {
-  return <li>{deed.description}</li>
+  return (
+    <li className="p-4 bg-slate-50 flex items-center gap-4">
+      <span className="text-xs text-mono text-slate-400">{deed.created_at}</span>
+      <span>{deed.description}</span>
+    </li>
+  )
 }
