@@ -119,3 +119,56 @@ REVOKE EXECUTE on function public.send_email_message FROM PUBLIC;
 -- To allow, say, authenticated users to call this function, you would use:
 -- GRANT EXECUTE ON FUNCTION public.send_email_message TO authenticated;
 
+
+CREATE OR REPLACE FUNCTION public.send_reminders()
+  RETURNS text
+  LANGUAGE plpgsql
+  SECURITY DEFINER -- required in order to read keys in the private schema
+  -- Set a secure search_path: trusted schema(s), then 'pg_temp'.
+  -- SET search_path = admin, pg_temp;
+  AS $$
+DECLARE
+BEGIN
+
+
+
+  RETURN retval;
+END;
+$$;
+-- Do not allow this function to be called by public users (or called at all from the client)
+REVOKE EXECUTE on function public.send_email_message FROM PUBLIC;
+
+create or replace function public.uid()
+returns uuid
+language sql stable
+as $$
+  select
+  nullif(
+    coalesce(
+      current_setting('request.jwt.claim.sub', true),
+      (current_setting('request.jwt.claims', true)::jsonb ->> 'sub')
+    ),
+    ''
+  )::uuid
+$$;
+
+CREATE OR REPLACE FUNCTION send_reminders()
+returns text as $$
+
+    var emails = plv8.execute(
+      'select email from auth.users left outer join public.deeds on public.deeds.id = auth.users.id and public.deeds.created_at = now()::date where deeds.created_at is null'
+    );
+
+    for (let x=0; x < emails.length; x++) {
+      var message = 
+          {"sender":"OneGoodThing@azabab.com",
+          "recipient":emails[x].email,
+          "subject": "Reminder: Do One Good Thing today!",
+          "html_body": "<html><body>Don't forget to do One Good Thing today.  Visit https://one-good-thing.vercel.app to record your deed and keep your streak alive.</body></html>"
+          };
+      plv8.execute("select send_email_message($1)", message);     
+    }
+
+  return '';
+
+$$ language plv8;
