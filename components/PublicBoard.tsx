@@ -26,7 +26,7 @@ export default function PublicBoard() {
     <div>
       <h2>Good board</h2>
       <p>Get inspiration from all the good that others have done</p>
-      <ul>
+      <ul className="mt-4">
         {deeds.map((deed: deed) => (
           <Deed key={deed.id} deed={deed} />
         ))}

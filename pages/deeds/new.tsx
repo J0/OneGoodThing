@@ -58,7 +58,7 @@ export default function NewDeed() {
       <div className="grid">
         <form onSubmit={createDeed} className="grid gap-4">
           <div>
-            <label htmlFor="description">Today's good deed: </label>
+            <label htmlFor="description">Today &apos;s good deed: </label>
             <input
               className="border p-4 w-full"
               type="text"

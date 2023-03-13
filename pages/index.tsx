@@ -65,13 +65,13 @@ export default function Home() {
         <GoodBoard />
       </div>
       <div className="mt-24 border-t pt-12">
-        <h2 className="text-serif">The why behind One Good Thing?</h2>
-        <p className="text-slate-600">
+        <h2 className="text-lg">Why One Good Thing?</h2>
+        <p className="text-slate-600 mt-4">
           Are you tired of feeling weighed down by the negativity around you? Do you want to make a change in your life and spread
-          positivity? "One Good Thing" is the solution you've been looking for! With our innovative platform, you can share one positive
-          thing that you've accomplished each day, no matter how big or small. By sharing your achievements with the world, you'll inspire
-          others and create a ripple effect of positivity. "One Good Thing" is the perfect way to start your day on a positive note and
-          cultivate a more optimistic outlook. Join us and start making a difference, one good thing at a time!
+          positivity? <em>One Good Thing</em> is the solution you have been looking for! With our innovative platform, you can share one
+          positive thing that you haveve accomplished each day, no matter how big or small. By sharing your achievements with the world, you
+          willl inspire others and create a ripple effect of positivity. <em>One Good Thing</em> is the perfect way to start your day on a
+          positive note and cultivate a more optimistic outlook. Join us and start making a difference, one good thing at a time!
         </p>
       </div>
     </>
