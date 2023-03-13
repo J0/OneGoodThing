@@ -9,11 +9,12 @@ type deed = Database['public']['Tables']['deeds']['Row']
 export default function Home() {
   const supabase = useSupabaseClient()
   const [deeds, setDeeds] = useState<any>([])
+  const user = useUser()
 
   useEffect(() => {
     async function fetchDeeds() {
       try {
-        let { data: deeds, error } = await supabase.from('deeds').select().limit(20)
+        let { data: deeds, error } = await supabase.from('deeds').select().eq('user_id', user?.id).limit(20)
         if (deeds) setDeeds(deeds)
       } catch (error) {
         console.log(error)
