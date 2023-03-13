@@ -1,4 +1,5 @@
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
 import { useState, FormEvent, ChangeEvent } from 'react'
 
 interface FormValues {
@@ -6,9 +7,10 @@ interface FormValues {
   isPublic?: string
 }
 
-const NewCompany = () => {
+export default function NewDeed() {
   const supabase = useSupabaseClient()
   const user = useUser()
+  const router = useRouter()
 
   const [loading, setLoading] = useState(true)
   const [formValues, setFormValues] = useState<FormValues>({})
@@ -25,24 +27,24 @@ const NewCompany = () => {
 
   async function createDeed(e: any) {
     e.preventDefault()
+    console.log(formValues)
     const { description, isPublic } = formValues
     try {
       setLoading(true)
 
       const updates = {
+        user_id: user?.id,
         description,
-        isPublic,
+        is_public: isPublic,
       }
 
-      // create a new company
-      let { data, error } = await supabase.from('companies').insert(updates).select().single()
-
-      // add the current user to the new company
-      let { error: userError } = await supabase.from('deeds').insert({ description: data?.description, id: 'user-id-in-here' })
+      // create a new deed
+      let { data, error } = await supabase.from('deeds').insert(updates).select().single()
 
       if (error) throw error
-      if (userError) throw userError
-      alert('Update created!')
+      console.log('Update created')
+      // go back to home upon success
+      router.push('/')
     } catch (error) {
       alert('Error updating the data!')
       console.log(error)
@@ -54,22 +56,36 @@ const NewCompany = () => {
   return user ? (
     <div className="container mx-auto">
       <div className="grid">
-        <form onSubmit={createDeed}>
+        <form onSubmit={createDeed} className="grid gap-4">
           <div>
-            <label htmlFor="company_name">Company name:</label>
-            <input type="text" id="company_name" name="company_name" value={formValues.description || ''} onChange={handleInputChange} />
+            <label htmlFor="description">Today's good deed: </label>
+            <input
+              className="border p-4 w-full"
+              type="text"
+              id="description"
+              name="description"
+              value={formValues.description || ''}
+              onChange={handleInputChange}
+            />
           </div>
           <div>
-            <label htmlFor="email">Make your update public?</label>
-            <input type="website" id="website" name="website" value={formValues.isPublic || ''} onChange={handleInputChange} />
+            <label htmlFor="isPublic" className="flex gap-4">
+              <input type="checkbox" id="isPublic" name="isPublic" value={formValues.isPublic || ''} onChange={handleInputChange} />
+              <span>Make your update public?</span>
+            </label>
           </div>
-          <button type="submit">Submit</button>
+          <p>
+            <button
+              className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"
+              type="submit"
+            >
+              Submit
+            </button>
+          </p>
         </form>
       </div>
     </div>
   ) : (
-    'Please login to create a company'
+    "Please login to create today's deed"
   )
 }
-
-export default NewCompany

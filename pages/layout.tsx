@@ -6,7 +6,7 @@ import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 export default function Layout({ children }: any) {
   const supabase = useSupabaseClient()
   const user = useUser()
-
+  console.log('user', user)
   return (
     <>
       <Head>
@@ -20,7 +20,15 @@ export default function Layout({ children }: any) {
           <h1>
             <Link href="/">One Good Thing</Link>
           </h1>
-          <div>{user ? 'Welcome' : <Link href="/login"> Login to get started</Link>}</div>
+          <div>
+            {user ? (
+              <p className="text-xs">
+                <span className="font-serif italic">{user.email}</span>
+              </p>
+            ) : (
+              <Link href="/login"> Login to get started</Link>
+            )}
+          </div>
         </div>
         {children}
       </main>

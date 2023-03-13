@@ -12,21 +12,24 @@ export interface Database {
       deeds: {
         Row: {
           created_at: string
-          desc: string | null
+          description: string | null
           id: string
-          isPublic: boolean | null
+          is_public: boolean | null
+          user_id: string
         }
         Insert: {
-          created_at: string
-          desc?: string | null
+          created_at?: string
+          description?: string | null
           id?: string
-          isPublic?: boolean | null
+          is_public?: boolean | null
+          user_id: string
         }
         Update: {
           created_at?: string
-          desc?: string | null
+          description?: string | null
           id?: string
-          isPublic?: boolean | null
+          is_public?: boolean | null
+          user_id?: string
         }
       }
     }
@@ -149,6 +152,10 @@ export interface Database {
           message: Json
         }
         Returns: Json
+      }
+      uid: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       urlencode:
         | {
