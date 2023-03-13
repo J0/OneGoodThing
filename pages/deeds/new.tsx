@@ -11,7 +11,7 @@ const NewCompany = () => {
   const user = useUser()
 
   const [loading, setLoading] = useState(true)
-  const [formValues, setFormValues] = useState<FormValues>({})
+  const [formValues, setFormValues] = useState<FormValues>({description: ''})
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
