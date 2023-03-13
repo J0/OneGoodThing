@@ -151,3 +151,24 @@ as $$
     ''
   )::uuid
 $$;
+
+CREATE OR REPLACE FUNCTION send_reminders()
+returns text as $$
+
+    var emails = plv8.execute(
+      'select email from auth.users left outer join public.deeds on public.deeds.id = auth.users.id and public.deeds.created_at = now()::date where deeds.created_at is null'
+    );
+
+    for (let x=0; x < emails.length; x++) {
+      var message = 
+          {"sender":"OneGoodThing@azabab.com",
+          "recipient":emails[x].email,
+          "subject": "Reminder: Do One Good Thing today!",
+          "html_body": "<html><body>Don't forget to do One Good Thing today.  Visit https://one-good-thing.vercel.app to record your deed and keep your streak alive.</body></html>"
+          };
+      plv8.execute("select send_email_message($1)", message);     
+    }
+
+  return '';
+
+$$ language plv8;
