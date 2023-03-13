@@ -1,8 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import React from 'react'
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react'
 
 export default function Layout({ children }: any) {
+  const supabase = useSupabaseClient()
+  const user = useUser()
+
   return (
     <>
       <Head>
@@ -16,9 +20,7 @@ export default function Layout({ children }: any) {
           <h1>
             <Link href="/">One Good Thing</Link>
           </h1>
-          <div>
-            <Link href="/login"> Login to get started</Link>
-          </div>
+          <div>{user ? 'Welcome' : <Link href="/login"> Login to get started</Link>}</div>
         </div>
         {children}
       </main>
