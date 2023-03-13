@@ -17,7 +17,8 @@ export default function Layout({ children }: any) {
       </Head>
       <main className="max-w-4xl mx-auto mt-24">
         <div className="flex item-center justify-between mb-12">
-          <h1>
+          <h1 className="flex items-center gap-2">
+            <span className="rounded-full w-4 h-4 bg-orange-500"></span>
             <Link href="/">One Good Thing</Link>
           </h1>
           <div>

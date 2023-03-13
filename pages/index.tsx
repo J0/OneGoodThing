@@ -24,7 +24,9 @@ export default function Home() {
         let { data: deeds, error } = await supabase.from('deeds').select().eq('user_id', user?.id).limit(20)
 
         // if you've got a Deed with created_at == today, you're up to date
-        if (deeds?.map((deed) => deed.created_at === today)) setDeedUpToDate(true)
+        if (deeds?.map((deed) => deed.created_at !== today)) {
+          setDeedUpToDate(true)
+        }
 
         if (deeds) setDeeds(deeds)
       } catch (error) {
@@ -32,21 +34,21 @@ export default function Home() {
       }
     }
     fetchDeeds()
-  })
+  }, [user])
 
   return (
     <>
       <div>
-        <p className="mt-8">Recording all the good you do, every day.</p>
+        <p className="mt-8">Recording all the good you do, every day. </p>
       </div>
       <div className="mt-24 grid grid-cols-2 gap-16">
-        <div className="">
-          <h2>Your good deeds</h2>
+        <div className="border-r pr-16">
+          <h2 className="mb-4">Your good deeds</h2>
           {deedUpToDate ? (
-            <p className="flex gap-1 items-center bg-green-50 p-2">
+            <div className="flex gap-1 items-center bg-green-50 p-2">
               <CheckIcon />
-              You are up to date
-            </p>
+              <span>You are up to date</span>
+            </div>
           ) : (
             <p className="flex gap-1 items-center">
               <Pencil2Icon />
@@ -61,6 +63,16 @@ export default function Home() {
         </div>
 
         <GoodBoard />
+      </div>
+      <div className="mt-24 border-t pt-12">
+        <h2 className="text-serif">The why behind One Good Thing?</h2>
+        <p className="text-slate-600">
+          Are you tired of feeling weighed down by the negativity around you? Do you want to make a change in your life and spread
+          positivity? "One Good Thing" is the solution you've been looking for! With our innovative platform, you can share one positive
+          thing that you've accomplished each day, no matter how big or small. By sharing your achievements with the world, you'll inspire
+          others and create a ripple effect of positivity. "One Good Thing" is the perfect way to start your day on a positive note and
+          cultivate a more optimistic outlook. Join us and start making a difference, one good thing at a time!
+        </p>
       </div>
     </>
   )

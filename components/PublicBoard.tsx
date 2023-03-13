@@ -6,21 +6,21 @@ import Deed from './Deed'
 
 type deed = Database['public']['Tables']['deeds']['Row']
 
-export default function GoodBoard() {
+export default function PublicBoard() {
   const supabase = useSupabaseClient()
   const [deeds, setDeeds] = useState<any>([])
 
   useEffect(() => {
     async function fetchDeeds() {
       try {
-        let { data: deeds, error } = await supabase.from('deeds').select().limit(20)
+        let { data: deeds, error } = await supabase.from('deeds').select().limit(20).eq('is_public', true).limit(20)
         if (deeds) setDeeds(deeds)
       } catch (error) {
         console.log(error)
       }
     }
     fetchDeeds()
-  })
+  }, [])
 
   return (
     <div>
