@@ -14,19 +14,19 @@ export interface Database {
           created_at: string
           desc: string | null
           id: string
-          public: boolean | null
+          isPublic: boolean | null
         }
         Insert: {
           created_at: string
           desc?: string | null
           id?: string
-          public?: boolean | null
+          isPublic?: boolean | null
         }
         Update: {
           created_at?: string
           desc?: string | null
           id?: string
-          public?: boolean | null
+          isPublic?: boolean | null
         }
       }
     }
