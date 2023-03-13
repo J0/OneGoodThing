@@ -11,9 +11,11 @@ export default function Layout({ children }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="max-w-4xl mx-auto mt-24 ">
-        <div className="flex item-center justify-between">
-          <h1>One Good Thing</h1>
+      <main className="max-w-4xl mx-auto mt-24">
+        <div className="flex item-center justify-between mb-12">
+          <h1>
+            <Link href="/">One Good Thing</Link>
+          </h1>
           <div>
             <Link href="/login"> Login to get started</Link>
           </div>
